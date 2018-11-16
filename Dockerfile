@@ -14,7 +14,7 @@ RUN apt-get update && \
   curl -L https://raw.githubusercontent.com/snapcore/snapcraft/master/docker/bin/snapcraft-wrapper --output snapcraft-wrapper && \
   mkdir -p /snap/bin && \
   mv snapcraft-wrapper /snap/bin/snapcraft && \
-  chmod a+x /snap/bin/snapcraft
+  chmod a+x /snap/bin/snapcraft && \
   apt remove --yes --purge curl jq squashfs-tools && \
   apt-get autoclean --yes && \
   apt-get clean --yes
