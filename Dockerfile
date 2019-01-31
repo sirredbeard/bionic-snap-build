@@ -2,7 +2,7 @@ FROM ubuntu:bionic
 
 RUN apt-get update && \
   apt-get dist-upgrade --yes && \
-  apt-get install --yes \
+  apt-get install --yes && \
   curl sudo jq squashfs-tools && \
   curl -L $(curl -H 'X-Ubuntu-Series: 16' 'https://api.snapcraft.io/api/v1/snaps/details/core' | jq '.download_url' -r) --output core.snap && \
   mkdir -p /snap/core && unsquashfs -d /snap/core/current core.snap && rm core.snap && \
@@ -11,8 +11,8 @@ RUN apt-get update && \
   curl -L $(curl -H 'X-Ubuntu-Series: 16' 'https://api.snapcraft.io/api/v1/snaps/details/snapcraft?channel=candidate' | jq '.download_url' -r) --output snapcraft.snap && \
   mkdir -p /snap/snapcraft && unsquashfs -d /snap/snapcraft/current snapcraft.snap && rm snapcraft.snap && \
   sed -i.back -e 's|installed_snaps =|installed_snaps = [] #|g' /snap/snapcraft/current/lib/python*/site-packages/snapcraft/internal/lifecycle/_runner.py && \
-  sed -i.back -e 's|if not repo.snaps.SnapPackage|#if not repo.snaps.SnapPackage|g' /snap/snapcraft/current/lib/python3.5/site-packages/snapcraft/internal/project_loader/_config.py
-  sed -i.back -e 's|    self.build_snaps.add|#    self.build_snaps.add|g' /snap/snapcraft/current/lib/python3.5/site-packages/snapcraft/internal/project_loader/_config.py
+  sed -i.back -e 's|if not repo.snaps.SnapPackage|#if not repo.snaps.SnapPackage|g' /snap/snapcraft/current/lib/python3.5/site-packages/snapcraft/internal/project_loader/_config.py && \
+  sed -i.back2 -e 's|    self.build_snaps.add|#    self.build_snaps.add|g' /snap/snapcraft/current/lib/python3.5/site-packages/snapcraft/internal/project_loader/_config.py && \
   curl -L https://raw.githubusercontent.com/snapcore/snapcraft/master/docker/bin/snapcraft-wrapper --output snapcraft-wrapper && \
   mkdir -p /snap/bin && \
   mv snapcraft-wrapper /snap/bin/snapcraft && \
