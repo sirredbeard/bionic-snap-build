@@ -22,3 +22,5 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get clean --yes
 
 ENV PATH=/snap/bin:$PATH
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
