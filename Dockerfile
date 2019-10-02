@@ -24,8 +24,6 @@ RUN snap_version="$(awk '/^version:/{print $2}' /snap/snapcraft/current/meta/sna
 RUN echo 'exec "$SNAP/usr/bin/python3" "$SNAP/bin/snapcraft" "$@"' >> /snap/bin/snapcraft
 RUN chmod +x /snap/bin/snapcraft
 
-COPY --from=builder /snap/bin/snapcraft /snap/bin/snapcraft
-
 ENV LANG="en_US.UTF-8"
 ENV LANGUAGE="en_US:en"
 ENV LC_ALL="en_US.UTF-8"
