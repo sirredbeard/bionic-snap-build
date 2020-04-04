@@ -17,6 +17,9 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
 # Configure git
 RUN git config --global user.email "you@example.com" && git config --global user.name "Your Name"
 
+# Create launchpad credentials storage folder
+RUN mkdir -p /github/home/.local/share/snapcraft/provider/launchpad/
+
 # Generate locale
 RUN apt update && apt dist-upgrade --yes && apt install --yes sudo locales && locale-gen en_US.UTF-8
 
