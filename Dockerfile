@@ -3,7 +3,7 @@ FROM ubuntu:bionic
 RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get update && \
   apt-get dist-upgrade --yes && \
-  apt-get install --yes curl sudo jq squashfs-tools tzdata snapd && \
+  apt-get install --yes curl sudo jq squashfs-tools tzdata && \
   curl -L $(curl -H 'X-Ubuntu-Series: 16' 'https://api.snapcraft.io/api/v1/snaps/details/core' | jq '.download_url' -r) --output core.snap && \
   mkdir -p /snap/core && unsquashfs -d /snap/core/current core.snap && rm core.snap && \
   curl -L $(curl -H 'X-Ubuntu-Series: 16' 'https://api.snapcraft.io/api/v1/snaps/details/core18' | jq '.download_url' -r) --output core18.snap && \
@@ -18,8 +18,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get autoclean --yes && \
   apt-get clean --yes
 
-# Generate locale
-RUN apt update && apt dist-upgrade --yes && apt install --yes sudo locales && locale-gen en_US.UTF-8
+# Generate locale and install dependencies.
+RUN apt update && apt dist-upgrade --yes && apt install --yes sudo locales snapd && locale-gen en_US.UTF-8
 
 # Create a snapcraft runner (TODO: move version detection to the core of snapcraft)
 RUN mkdir -p /snap/bin
