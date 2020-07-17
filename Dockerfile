@@ -3,7 +3,7 @@ FROM ubuntu:bionic
 RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get update && \
   apt-get dist-upgrade --yes && \
-  apt-get install --yes curl sudo jq squashfs-tools tzdata && \
+  apt-get install --yes curl sudo jq squashfs-tools tzdata snapd && \
   curl -L $(curl -H 'X-Ubuntu-Series: 16' 'https://api.snapcraft.io/api/v1/snaps/details/core' | jq '.download_url' -r) --output core.snap && \
   mkdir -p /snap/core && unsquashfs -d /snap/core/current core.snap && rm core.snap && \
   curl -L $(curl -H 'X-Ubuntu-Series: 16' 'https://api.snapcraft.io/api/v1/snaps/details/core18' | jq '.download_url' -r) --output core18.snap && \
