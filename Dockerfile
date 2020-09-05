@@ -14,8 +14,8 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get autoclean --yes && \
   apt-get clean --yes
 
-# Generate locale
-RUN apt update && apt dist-upgrade --yes && apt install --yes sudo locales && locale-gen en_US.UTF-8
+# Generate locale and install dependencies.
+RUN apt update && apt dist-upgrade --yes && apt install --yes sudo locales snapd && locale-gen en_US.UTF-8
 
 # Create a snapcraft runner (TODO: move version detection to the core of snapcraft)
 RUN mkdir -p /snap/bin
