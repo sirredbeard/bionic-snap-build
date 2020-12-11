@@ -10,7 +10,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
   mkdir -p /snap/core18 && unsquashfs -d /snap/core18/current core18.snap && rm core18.snap && \
   curl -L $(curl -H 'X-Ubuntu-Series: 16' 'https://api.snapcraft.io/api/v1/snaps/details/snapcraft?channel=candidate' | jq '.download_url' -r) --output snapcraft.snap && \
   mkdir -p /snap/snapcraft && unsquashfs -d /snap/snapcraft/current snapcraft.snap && rm snapcraft.snap && \
-  apt remove --yes --purge curl jq squashfs-tools && \
+  apt remove --yes --purge squashfs-tools && \
   apt-get autoclean --yes && \
   apt-get clean --yes
 
