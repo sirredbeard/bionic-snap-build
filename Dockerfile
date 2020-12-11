@@ -23,6 +23,7 @@ RUN echo "#!/bin/sh" > /snap/bin/snapcraft
 RUN snap_version="$(awk '/^version:/{print $2}' /snap/snapcraft/current/meta/snap.yaml)" && echo "export SNAP_VERSION=\"$snap_version\"" >> /snap/bin/snapcraft
 RUN echo 'exec "$SNAP/usr/bin/python3" "$SNAP/bin/snapcraft" "$@"' >> /snap/bin/snapcraft
 RUN chmod +x /snap/bin/snapcraft
+RUN git config --global user.email "you@example.com" && git config --global user.name "Your Name"
 
 ENV LANG="en_US.UTF-8"
 ENV LANGUAGE="en_US:en"
