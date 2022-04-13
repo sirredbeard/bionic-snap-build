@@ -3,7 +3,7 @@ FROM ubuntu:focal
 RUN export DEBIAN_FRONTEND=noninteractive && \
   apt-get update && \
   apt-get dist-upgrade --yes && \
-  apt-get install --yes curl sudo git jq squashfs-tools tzdata && \
+  apt-get install --yes curl sudo git jq squashfs-tools tzdata python3 && \
   curl -L $(curl -H 'X-Ubuntu-Series: 16' 'https://api.snapcraft.io/api/v1/snaps/details/core' | jq '.download_url' -r) --output core.snap && \
   mkdir -p /snap/core && unsquashfs -d /snap/core/current core.snap && rm core.snap && \
   curl -L $(curl -H 'X-Ubuntu-Series: 16' 'https://api.snapcraft.io/api/v1/snaps/details/core18' | jq '.download_url' -r) --output core18.snap && \
@@ -12,6 +12,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
   mkdir -p /snap/snapcraft && unsquashfs -d /snap/snapcraft/current snapcraft.snap && rm snapcraft.snap && \
   apt remove --yes --purge squashfs-tools && \
   apt-get autoclean --yes && \
+  apt-get autoremove --yes && \
   apt-get clean --yes
 
 # Generate locale and install dependencies.
@@ -21,7 +22,7 @@ RUN apt update && apt dist-upgrade --yes && apt install --yes sudo locales snapd
 RUN mkdir -p /snap/bin
 RUN echo "#!/bin/sh" > /snap/bin/snapcraft
 RUN snap_version="$(awk '/^version:/{print $2}' /snap/snapcraft/current/meta/snap.yaml)" && echo "export SNAP_VERSION=\"$snap_version\"" >> /snap/bin/snapcraft
-RUN echo 'exec "$SNAP/usr/bin/python3" "$SNAP/bin/snapcraft" "$@"' >> /snap/bin/snapcraft
+RUN echo 'exec python3 "$SNAP/bin/snapcraft" "$@"' >> /snap/bin/snapcraft
 RUN chmod +x /snap/bin/snapcraft
 RUN git config --global user.email "you@example.com" && git config --global user.name "Your Name"
 
